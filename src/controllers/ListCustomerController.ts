@@ -1,11 +1,11 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { ListCustomerService } from "../services/ListCustomerService";
+import { ListAllCustomersService } from "../services/ListAllCustomersService";
 
 class ListCustomerController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
-    const listCustomerService = new ListCustomerService();
+    const listAllCustomersService = new ListAllCustomersService();
 
-    const customers = await listCustomerService.execute();
+    const customers = await listAllCustomersService.execute();
 
     reply.send(customers);
   }
