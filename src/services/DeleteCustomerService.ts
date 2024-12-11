@@ -17,7 +17,7 @@ class DeleteCustomerService {
     });
 
     if (!findCustomer) {
-      throw new Error("Cliente não existe!");
+      throw new Error("Cliente não encontrado!");
     }
 
     await prismaClient.customer.delete({
