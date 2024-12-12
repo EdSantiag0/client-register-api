@@ -9,11 +9,20 @@ class UpdateCustomerController {
       email: string;
     };
 
+    if (!id || !name || !email) {
+      return reply
+        .status(400)
+        .send({ error: "Todos os campos são obrigatórios" });
+    }
+
     const customerService = new UpdateCustomerService();
 
     const customer = await customerService.execute({ id, name, email });
 
-    reply.send(customer);
+    reply.status(200).send({
+      message: "Cliente atualizado com sucesso!",
+      customer,
+    });
   }
 }
 

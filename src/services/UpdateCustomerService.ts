@@ -22,7 +22,7 @@ class UpdateCustomerService {
       throw new Error("Cliente não encontrado");
     }
 
-    await prismaClient.customer.update({
+    const updateCustomer = await prismaClient.customer.update({
       where: {
         id: findCustomer.id,
       },
@@ -33,7 +33,7 @@ class UpdateCustomerService {
       },
     });
 
-    return { message: "Cliente atualizado com sucesso!" };
+    return updateCustomer;
   }
 }
 
