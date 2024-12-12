@@ -104,3 +104,21 @@ Body (JSON):
 DELETE /customer/:id
 
 Descrição: Remove um cliente pelo ID.
+
+## Estrutura do Projeto
+
+client-register-api/
+├── prisma/
+│ ├── schema.prisma
+├── src/
+│ ├── controllers/
+│ ├── routes/
+│ ├── services/
+│ ├── prisma.ts
+├── .env
+├── package.json
+├── tsconfig.json
+
+## Autor
+
+Desenvolvido por [Ed Santiago.](https://github.com/EdSantiag0)
