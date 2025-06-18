@@ -2,7 +2,7 @@
 
 ## Descrição
 
-A Client Register API é uma aplicação backend desenvolvida com Fastify, Prisma e MongoDB para gerenciar o cadastro de clientes. Esta API permite realizar operações CRUD (Create, Read, Update, Delete) de forma eficiente e segura, sendo testada usando o Insomnia.
+O Client Register API é uma aplicação backend desenvolvida com Fastify, Prisma e MongoDB para gerenciar o cadastro de clientes. Esta API permite realizar operações CRUD (Create, Read, Update, Delete) de forma eficiente e segura, sendo testada usando o Insomnia.
 
 ## Funcionalidades
 

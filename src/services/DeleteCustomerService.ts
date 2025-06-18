@@ -26,7 +26,9 @@ class DeleteCustomerService {
       },
     });
 
-    return { message: "Cliente deletado com sucesso!" };
+    return {
+      message: `Cliente ${findCustomer.name} foi deletado com sucesso!`,
+    };
   }
 }
 
