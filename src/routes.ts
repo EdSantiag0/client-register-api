@@ -50,7 +50,7 @@ export async function routes(
   );
 
   fastify.put(
-    "/customer",
+    "/customer/:id",
     async (request: FastifyRequest, reply: FastifyReply) => {
       return new UpdateCustomerController().handle(request, reply);
     }
