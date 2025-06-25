@@ -3,11 +3,17 @@ import { ListAllCustomersService } from "../services/ListAllCustomersService";
 
 class ListAllCustomersController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
-    const listAllCustomersService = new ListAllCustomersService();
+    try {
+      const listAllCustomersService = new ListAllCustomersService();
 
-    const customers = await listAllCustomersService.execute();
+      const customers = await listAllCustomersService.execute();
 
-    reply.send(customers);
+      reply.send(customers);
+    } catch (error) {
+      return reply.status(500).send({
+        error: "Erro interno do servidor",
+      });
+    }
   }
 }
 
