@@ -1,58 +1,46 @@
 # Client Register API
 
+![Demonstração da API](https://github.com/EdSantiag0/client-register-api/blob/main/assets/demo.png)
+
 ## Descrição
 
-O Client Register API é uma aplicação backend desenvolvida com Fastify, Prisma e MongoDB para gerenciar o cadastro de clientes. Esta API permite realizar operações CRUD (Create, Read, Update, Delete) de forma eficiente e segura, sendo testada usando o Insomnia.
+O **Client Register API** é uma aplicação backend desenvolvida com Fastify, Zod, Prisma e MongoDB para gerenciar o cadastro de clientes. A API permite realizar operações CRUD (Create, Read, Update, Delete) de forma eficiente e segura, sendo testada usando o Insomnia.
 
 ## Funcionalidades
 
-- POST /customer: Adiciona um novo cliente.
-
-- GET /customer: Retorna todos os clientes cadastrados.
-
-- GET /customer/:id: Retorna um cliente específico pelo ID.
-
-- PUT /customer: Atualiza as informações de um cliente.
-
-- DELETE /customer/:id: Remove um cliente pelo ID.
+- **POST `/customer`**: Adiciona um novo cliente.
+- **GET `/customer`**: Retorna todos os clientes cadastrados.
+- **GET `/customer/:id`**: Retorna um cliente específico pelo ID.
+- **PUT `/customer/:id`**: Atualiza as informações de um cliente.
+- **DELETE `/customer/:id`**: Remove um cliente pelo ID.
 
 ## Tecnologias Utilizadas
 
-- Node.js: Ambiente de execução JavaScript.
-
-- Fastify: Framework para aplicações web.
-
-- Prisma: ORM para interação com o banco de dados.
-
-- MongoDB: Banco de dados NoSQL.
-
-- Insomnia: Ferramenta para testar os endpoints da API.
+- **Node.js**: Ambiente de execução JavaScript.
+- **Fastify**: Framework para aplicações web.
+- **Zod**: Para validação de dados.
+- **Prisma**: ORM para interação com o banco de dados.
+- **MongoDB**: Banco de dados NoSQL.
+- **Insomnia**: Ferramenta para testar os endpoints da API.
 
 ## Instalação
 
 1. Clone o repositório:
-
-```
-git clone https://github.com/EdSantiag0/client-register-api.git
-```
-
+   ```
+   git clone https://github.com/EdSantiag0/client-register-api.git
+   ```
 2. Acesse o diretório do projeto:
-
-```
-cd client-register-api
-```
-
+   ```
+   cd client-register-api
+   ```
 3. Instale as dependências:
-
-```
-npm install
-```
-
-4. Configure o banco de dados no arquivo .env (exemplo):
-
-```
-DATABASE_URL="mongodb+srv://<usuario>:<senha>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority"
-```
+   ```
+   npm install
+   ```
+4. Configure o banco de dados no arquivo `.env` (exemplo):
+   ```
+   DATABASE_URL="mongodb+srv://<usuario>:<senha>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority"
+   ```
 
 ## Uso
 
@@ -66,44 +54,53 @@ npm run dev
 
 ## Endpoints
 
-POST /customer
+### Criar Cliente
 
-Descrição: Cria um novo cliente.
+**POST** `/customer`
 
-Body (JSON):
+**Body (JSON):**
 
-```
+```json
 {
   "name": "João Silva",
   "email": "joao.silva@example.com"
 }
 ```
 
-GET /customer
+---
 
-Descrição: Retorna todos os clientes cadastrados.
+### Listar Todos os Clientes
 
-GET /customer/:id
+**GET** `/customer`
 
-Descrição: Retorna um cliente específico pelo ID.
+---
 
-PUT /customer
+### Buscar Cliente por ID
 
-Descrição: Atualiza um cliente existente.
+**GET** `/customer/:id`
 
-Body (JSON):
+---
 
-```
+### Atualizar Cliente
+
+**PUT** `/customer/:id`
+
+**Body (JSON):**
+
+```json
 {
-  "id": "<id_do_cliente>",
   "name": "João da Silva",
   "email": "joao.dasilva@example.com"
 }
 ```
 
-DELETE /customer/:id
+---
 
-Descrição: Remove um cliente pelo ID.
+### Remover Cliente
+
+**DELETE** `/customer/:id`
+
+---
 
 ## Autor
 
