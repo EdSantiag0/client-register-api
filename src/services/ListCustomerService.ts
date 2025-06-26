@@ -6,10 +6,6 @@ interface ListCustomerProps {
 
 class ListCustomerService {
   async execute({ id }: ListCustomerProps) {
-    if (!id) {
-      throw new Error("Solicitação invalida (ID obrigatório).");
-    }
-
     const findCustomer = await prismaClient.customer.findUnique({
       where: {
         id: id,

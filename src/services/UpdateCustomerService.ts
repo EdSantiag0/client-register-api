@@ -8,10 +8,6 @@ interface UpdateCustomerProps {
 
 class UpdateCustomerService {
   async execute({ id, name, email }: UpdateCustomerProps) {
-    if (!id) {
-      throw new Error("Solicitação invalida.");
-    }
-
     const findCustomer = await prismaClient.customer.findFirst({
       where: {
         id: id,

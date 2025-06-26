@@ -3,7 +3,7 @@ import { DeleteCustomerService } from "../services/DeleteCustomerService";
 import { z } from "zod";
 
 const deleteCustomerSchema = z.object({
-  id: z.string().uuid("ID inválido"),
+  id: z.string().min(1, "ID é obrigatório"),
 });
 class DeleteCustomerController {
   async handle(request: FastifyRequest, reply: FastifyReply) {

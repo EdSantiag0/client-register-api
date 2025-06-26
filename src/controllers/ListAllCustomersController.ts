@@ -3,7 +3,7 @@ import { ListAllCustomersService } from "../services/ListAllCustomersService";
 import { z } from "zod";
 
 const listAllCustomersSchema = z.object({
-  id: z.string().uuid("ID inválido").optional(),
+  id: z.string().min(1, "ID é obrigatório"),
 });
 class ListAllCustomersController {
   async handle(request: FastifyRequest, reply: FastifyReply) {

@@ -3,7 +3,7 @@ import { ListCustomerService } from "../services/ListCustomerService";
 import { z } from "zod";
 
 const listCustomerSchema = z.object({
-  id: z.string().uuid("ID inválido"),
+  id: z.string().min(1, "ID é obrigatório"),
 });
 
 class ListCustomerController {
