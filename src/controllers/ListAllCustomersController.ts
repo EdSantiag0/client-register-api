@@ -9,8 +9,10 @@ class ListAllCustomersController {
 
       reply.send(customers);
     } catch (error) {
+      console.error("Erro em ListAllCustomersController:", error);
       return reply.status(500).send({
         error: "Erro interno do servidor",
+        detalhe: error instanceof Error ? error.message : String(error),
       });
     }
   }
