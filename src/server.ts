@@ -18,6 +18,7 @@ const start = async () => {
       "https://client-register-frontend.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: true,
     credentials: true,
   });
   await app.register(routes);
