@@ -12,7 +12,11 @@ app.setErrorHandler((error, request, reply) => {
 
 const start = async () => {
   await app.register(cors, {
-    origin: ["http://localhost:5173", "http://localhost:3333"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3333",
+      "https://client-register-frontend.vercel.app",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
   });
   await app.register(routes);
