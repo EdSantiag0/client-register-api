@@ -43,4 +43,9 @@ app.get("/ping", async () => {
   return { pong: true };
 });
 
+fetch("https://client-register-api-czmx.onrender.com/ping")
+  .then((res) => res.json())
+  .then(console.log)
+  .catch(console.error);
+
 start();
