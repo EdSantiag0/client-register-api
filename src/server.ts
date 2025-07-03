@@ -39,4 +39,8 @@ const start = async () => {
   }
 };
 
+app.get("/ping", async () => {
+  return { pong: true };
+});
+
 start();
