@@ -1,3 +1,5 @@
+console.log("✅ Iniciando servidor com CORS configurado...");
+
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { routes } from "./routes";
@@ -32,7 +34,7 @@ const start = async () => {
     await app.register(routes);
 
     await app.listen({ port, host: "0.0.0.0" });
-    console.log(`🚀 Server running on port ${port}`);
+    console.log("🚀 Server com CORS ativo!");
   } catch (err) {
     app.log.error(err);
     process.exit(1);
