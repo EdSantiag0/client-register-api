@@ -1,10 +1,12 @@
 import { ListCustomerService } from "../../src/services/ListCustomerService";
 import prismaClient from "../../src/prisma";
 
-jest.mock(
-  "../../src/prisma",
-  () => require("../__mocks__/prismaClient").default
-);
+// Mock direto
+jest.mock("../../src/prisma", () => ({
+  customer: {
+    findUnique: jest.fn(),
+  },
+}));
 
 describe("ListCustomerService", () => {
   it("deve retornar um cliente quando ID existir", async () => {
