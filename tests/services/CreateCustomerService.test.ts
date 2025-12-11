@@ -1,6 +1,7 @@
 import { CreateCustomerService } from "../../src/services/CreateCustomerService";
 import prismaClient from "../../src/prisma";
 
+// Mock do prismaClient
 jest.mock("../../src/prisma", () => ({
   customer: {
     create: jest.fn(),
@@ -8,6 +9,7 @@ jest.mock("../../src/prisma", () => ({
 }));
 
 describe("CreateCustomerService", () => {
+  // 1ª - Teste para criar cliente
   it("deve criar um cliente com sucesso", async () => {
     const fakeCustomer = {
       id: "1",
