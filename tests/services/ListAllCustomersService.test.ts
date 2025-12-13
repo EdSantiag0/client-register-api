@@ -3,8 +3,11 @@ import prismaClient from "../../src/prisma";
 
 // Mock do prismaClient
 jest.mock("../../src/prisma", () => ({
-  customer: {
-    findMany: jest.fn(),
+  __esModule: true,
+  default: {
+    customer: {
+      findMany: jest.fn(),
+    },
   },
 }));
 

@@ -4,9 +4,12 @@ import exp from "constants";
 
 //Mock do prismaClient
 jest.mock("../../src/prisma", () => ({
-  customer: {
-    findFirst: jest.fn(),
-    delete: jest.fn(),
+  __esModule: true,
+  default: {
+    customer: {
+      findFirst: jest.fn(),
+      delete: jest.fn(),
+    },
   },
 }));
 
