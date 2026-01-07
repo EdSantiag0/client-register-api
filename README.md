@@ -1,5 +1,7 @@
 # Client Register API
 
+![CI](https://github.com/EdSantiag0/client-register-api/actions/workflows/test.yml/badge.svg)
+
 ![Demonstração da API](https://github.com/EdSantiag0/client-register-api/blob/main/assets/demo.png)
 
 ## Descrição
@@ -18,9 +20,15 @@ O **Client Register API** é uma aplicação backend desenvolvida com Fastify, Z
 
 - **Node.js**: Ambiente de execução JavaScript.
 - **Fastify**: Framework para aplicações web.
-- **Zod**: Para validação de dados.
-- **Prisma**: ORM para interação com o banco de dados.
+- **Prisma (v7)**: ORM para interação com o banco de dados.
 - **MongoDB**: Banco de dados NoSQL.
+- **Zod**: Para validação de dados.
+
+### Qualidade e Confiabilidade
+
+- **Jest**: Para Testes unitários
+- **GitHub Actions**: Pipeline de CI
+- **GitHub Secrets**: Variáveis de ambiente.
 - **Insomnia**: Ferramenta para testar os endpoints da API.
 
 ## Instalação
@@ -101,6 +109,20 @@ npm run dev
 **DELETE** `/customer/:id`
 
 ---
+
+## Testes
+
+Para rodar os testes unitários:
+
+```bash
+npm test
+
+```
+
+## Deploy
+
+- Backend hospedado no **Render**
+- Frontend consumindo a API via **Vercel**
 
 ## Autor
 
