@@ -1,6 +1,6 @@
 # Client Register API
 
-![CI](https://github.com/EdSantiag0/client-register-api/actions/workflows/test.yml/badge.svg)
+[![CI](https://github.com/EdSantiag0/client-register-api/actions/workflows/tests.yml/badge.svg)](https://github.com/EdSantiag0/client-register-api/actions/workflows/tests.yml)
 
 ![Demonstração da API](https://github.com/EdSantiag0/client-register-api/blob/main/assets/demo.png)
 
