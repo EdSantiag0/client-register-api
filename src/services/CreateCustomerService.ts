@@ -1,4 +1,5 @@
 import prismaClient from "../prisma";
+import { AppError } from "../errors/AppError";
 
 interface CreateCustomerProps {
   name: string;
@@ -7,15 +8,35 @@ interface CreateCustomerProps {
 
 class CreateCustomerService {
   async execute({ name, email }: CreateCustomerProps) {
-    const customer = await prismaClient.customer.create({
-      data: {
-        name,
-        email,
-        status: true,
-      },
-    });
+    try {
+      const existingCustomer = await prismaClient.customer.findFirst({
+        where: {
+          email: email,
+        },
+      });
 
-    return customer;
+      if (existingCustomer) {
+        throw new AppError("Já existe um cliente com este email!", 409);
+      }
+
+      const customer = await prismaClient.customer.create({
+        data: {
+          name,
+          email,
+          status: true,
+        },
+      });
+
+      return customer;
+    } catch (error) {
+      console.error("Erro ao criar cliente no banco de dados:", error);
+
+      if (error instanceof AppError) {
+        throw error;
+      }
+
+      throw new AppError("Falha ao criar cliente no banco de dados", 503);
+    }
   }
 }
 
