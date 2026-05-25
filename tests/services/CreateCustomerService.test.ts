@@ -7,6 +7,7 @@ jest.mock("../../src/prisma", () => ({
   default: {
     customer: {
       create: jest.fn(),
+      findFirst: jest.fn(),
     },
   },
 }));
@@ -21,6 +22,7 @@ describe("CreateCustomerService", () => {
       status: true,
     };
 
+    (prismaClient.customer.findFirst as jest.Mock).mockResolvedValue(null);
     (prismaClient.customer.create as jest.Mock).mockResolvedValue(fakeCustomer);
 
     const service = new CreateCustomerService();
