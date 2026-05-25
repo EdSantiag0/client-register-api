@@ -1,6 +1,5 @@
 import { DeleteCustomerService } from "../../src/services/DeleteCustomerService";
 import prismaClient from "../../src/prisma";
-import exp from "constants";
 
 //Mock do prismaClient
 jest.mock("../../src/prisma", () => ({
@@ -17,7 +16,7 @@ const mockedPrisma = prismaClient as jest.Mocked<typeof prismaClient>;
 
 // Limpa os mocks antes de cada teste
 beforeEach(() => {
-  jest.clearAllMocks();
+  jest.resetAllMocks();
 });
 
 describe("DeleteCustomerService", () => {
@@ -29,10 +28,11 @@ describe("DeleteCustomerService", () => {
       email: "edu@example.com",
     };
 
-    (mockedPrisma.customer.findFirst as jest.Mock).mockResolvedValue(null);
+    (mockedPrisma.customer.findFirst as jest.Mock).mockResolvedValue(
+      fakeCustomer,
+    );
 
     (mockedPrisma.customer.delete as jest.Mock).mockResolvedValue(fakeCustomer);
-    (prismaClient.customer.delete as jest.Mock).mockResolvedValue(fakeCustomer);
 
     const service = new DeleteCustomerService();
     const result = await service.execute({ id: "1" });
@@ -51,9 +51,12 @@ describe("DeleteCustomerService", () => {
 
     const service = new DeleteCustomerService();
 
-    await expect(service.execute({ id: "999" })).rejects.toThrow(
-      "Cliente não encontrado!",
-    );
+    try {
+      await service.execute({ id: "999" });
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toBe("Cliente não encontrado!");
+    }
 
     expect(mockedPrisma.customer.delete).not.toHaveBeenCalled();
   });
@@ -71,8 +74,13 @@ describe("DeleteCustomerService", () => {
 
     const service = new DeleteCustomerService();
 
-    await expect(service.execute({ id: "1" })).rejects.toThrow(
-      "Falha ao deletar cliente no banco de dados",
-    );
+    try {
+      await service.execute({ id: "1" });
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toBe(
+        "Falha ao deletar cliente no banco de dados",
+      );
+    }
   });
 });

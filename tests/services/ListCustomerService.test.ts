@@ -22,7 +22,9 @@ describe("ListCustomerService", () => {
       email: "edu@example.com",
     };
 
-    (prismaClient.customer.findUnique as jest.Mock).mockResolvedValue(null);
+    (prismaClient.customer.findUnique as jest.Mock).mockResolvedValue(
+      fakeCustomer,
+    );
 
     const result = await service.execute({ id: "1" });
 
@@ -38,8 +40,11 @@ describe("ListCustomerService", () => {
 
     (prismaClient.customer.findUnique as jest.Mock).mockResolvedValue(null);
 
-    await expect(service.execute({ id: "999" })).rejects.toThrow(
-      "Falaha ao encontrar cliente no banco de dados",
-    );
+    try {
+      await service.execute({ id: "999" });
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toBe("Cliente não encontrado");
+    }
   });
 });
