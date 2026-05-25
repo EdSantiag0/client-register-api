@@ -29,9 +29,7 @@ describe("DeleteCustomerService", () => {
       email: "edu@example.com",
     };
 
-    (mockedPrisma.customer.findFirst as jest.Mock).mockResolvedValue(
-      fakeCustomer
-    );
+    (mockedPrisma.customer.findFirst as jest.Mock).mockResolvedValue(null);
 
     (mockedPrisma.customer.delete as jest.Mock).mockResolvedValue(fakeCustomer);
     (prismaClient.customer.delete as jest.Mock).mockResolvedValue(fakeCustomer);
@@ -54,7 +52,7 @@ describe("DeleteCustomerService", () => {
     const service = new DeleteCustomerService();
 
     await expect(service.execute({ id: "999" })).rejects.toThrow(
-      "Cliente não encontrado!"
+      "Cliente não encontrado!",
     );
 
     expect(mockedPrisma.customer.delete).not.toHaveBeenCalled();
@@ -68,13 +66,13 @@ describe("DeleteCustomerService", () => {
     });
 
     (mockedPrisma.customer.delete as jest.Mock).mockRejectedValue(
-      new Error("Erro ao deletar no banco")
+      new Error("Erro ao deletar no banco"),
     );
 
     const service = new DeleteCustomerService();
 
     await expect(service.execute({ id: "1" })).rejects.toThrow(
-      "Erro ao deletar no banco"
+      "Falha ao deletar cliente no banco de dados",
     );
   });
 });

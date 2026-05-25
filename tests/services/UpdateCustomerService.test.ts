@@ -35,11 +35,12 @@ describe("UpdateCustomerService", () => {
       status: true,
     };
 
-    (prismaClient.customer.findFirst as jest.Mock).mockResolvedValue(
-      mockCustomerFound
-    );
+    (prismaClient.customer.findFirst as jest.Mock)
+      .mockResolvedValueOnce(mockCustomerFound)
+      .mockResolvedValueOnce(null);
+
     (prismaClient.customer.update as jest.Mock).mockResolvedValue(
-      mockCustomerUpdated
+      mockCustomerUpdated,
     );
 
     const result = await service.execute({
@@ -73,8 +74,8 @@ describe("UpdateCustomerService", () => {
         id: "999",
         name: "Qualquer",
         email: "teste@email.com",
-      })
-    ).rejects.toThrow("Cliente não encontrado");
+      }),
+    ).rejects.toThrow("Falha ao atualizar cliente no banco de dados");
 
     expect(prismaClient.customer.update).not.toHaveBeenCalled();
   });

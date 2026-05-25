@@ -22,8 +22,9 @@ describe("CreateCustomerService", () => {
       status: true,
     };
 
-    (prismaClient.customer.findFirst as jest.Mock).mockResolvedValue(null);
-    (prismaClient.customer.create as jest.Mock).mockResolvedValue(fakeCustomer);
+    (prismaClient.customer.create as jest.Mock)
+      .mockResolvedValueOnce(fakeCustomer)
+      .mockResolvedValueOnce(null);
 
     const service = new CreateCustomerService();
 
