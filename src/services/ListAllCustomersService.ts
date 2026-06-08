@@ -1,15 +1,15 @@
 import prismaClient from "../prisma";
+import { AppError } from "../errors/AppError";
 
 class ListAllCustomersService {
   async execute() {
-    console.log("Iniciando execução do serviço de listagem de clientes...");
     try {
       const customers = await prismaClient.customer.findMany();
-      console.log("Clientes encontrados:", customers);
+
       return customers;
     } catch (error) {
-      console.error("Erro no prisma.customer.findMany:", error);
-      throw error;
+      console.error("Erro ao buscar clientes no banco de dados:", error);
+      throw new AppError("Falha ao encontrar clientes no banco de dados", 503);
     }
   }
 }

@@ -23,7 +23,7 @@ describe("ListAllCustomerService", () => {
     ];
 
     (mockedPrisma.customer.findMany as jest.Mock).mockResolvedValue(
-      fakeCustomers
+      fakeCustomers,
     );
 
     const service = new ListAllCustomersService();
@@ -35,7 +35,7 @@ describe("ListAllCustomerService", () => {
 
   // 2ª Teste para simular erro no prisma
   it("deve lançar erro quando o prisma falhar", async () => {
-    const fakeError = new Error("Erro no banco");
+    const fakeError = new Error("Erro ao buscar clientes no banco de dados");
 
     (mockedPrisma.customer.findMany as jest.Mock).mockRejectedValue(fakeError);
 
@@ -43,7 +43,9 @@ describe("ListAllCustomerService", () => {
 
     const service = new ListAllCustomersService();
 
-    await expect(service.execute()).rejects.toThrow("Erro no banco");
+    await expect(service.execute()).rejects.toThrow(
+      "Falha ao encontrar clientes no banco de dados",
+    );
 
     consoleErrorSpy.mockRestore();
   });

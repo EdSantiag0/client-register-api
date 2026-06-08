@@ -23,7 +23,7 @@ describe("ListCustomerService", () => {
     };
 
     (prismaClient.customer.findUnique as jest.Mock).mockResolvedValue(
-      fakeCustomer
+      fakeCustomer,
     );
 
     const result = await service.execute({ id: "1" });
@@ -40,8 +40,11 @@ describe("ListCustomerService", () => {
 
     (prismaClient.customer.findUnique as jest.Mock).mockResolvedValue(null);
 
-    await expect(service.execute({ id: "999" })).rejects.toThrow(
-      "Cliente não encontrado"
-    );
+    try {
+      await service.execute({ id: "999" });
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toBe("Cliente não encontrado");
+    }
   });
 });

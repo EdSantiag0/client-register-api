@@ -1,4 +1,5 @@
 import prismaClient from "../prisma";
+import { AppError } from "../errors/AppError";
 
 interface ListCustomerProps {
   id: string;
@@ -6,17 +7,27 @@ interface ListCustomerProps {
 
 class ListCustomerService {
   async execute({ id }: ListCustomerProps) {
-    const findCustomer = await prismaClient.customer.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    try {
+      const findCustomer = await prismaClient.customer.findUnique({
+        where: {
+          id: id,
+        },
+      });
 
-    if (!findCustomer) {
-      throw new Error("Cliente não encontrado");
+      if (!findCustomer) {
+        throw new AppError("Cliente não encontrado", 404);
+      }
+
+      return findCustomer;
+    } catch (error) {
+      console.error("Erro ao buscar cliente no banco de dados:", error);
+
+      if (error instanceof AppError) {
+        throw error;
+      }
+
+      throw new AppError("Falha ao encontrar cliente no banco de dados", 503);
     }
-
-    return findCustomer;
   }
 }
 

@@ -14,7 +14,7 @@ jest.mock("../../src/prisma", () => ({
 
 describe("UpdateCustomerService", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   // 1ª - Teste para atualizar cliente
@@ -35,11 +35,12 @@ describe("UpdateCustomerService", () => {
       status: true,
     };
 
-    (prismaClient.customer.findFirst as jest.Mock).mockResolvedValue(
-      mockCustomerFound
-    );
+    (prismaClient.customer.findFirst as jest.Mock)
+      .mockResolvedValueOnce(mockCustomerFound)
+      .mockResolvedValueOnce(null);
+
     (prismaClient.customer.update as jest.Mock).mockResolvedValue(
-      mockCustomerUpdated
+      mockCustomerUpdated,
     );
 
     const result = await service.execute({
@@ -68,13 +69,17 @@ describe("UpdateCustomerService", () => {
 
     (prismaClient.customer.findFirst as jest.Mock).mockResolvedValue(null);
 
-    await expect(
-      service.execute({
+    try {
+      await service.execute({
         id: "999",
         name: "Qualquer",
         email: "teste@email.com",
-      })
-    ).rejects.toThrow("Cliente não encontrado");
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+
+      expect((error as Error).message).toBe("Cliente não encontrado");
+    }
 
     expect(prismaClient.customer.update).not.toHaveBeenCalled();
   });
