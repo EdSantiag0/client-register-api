@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { ListCustomerService } from "../services/ListCustomerService";
+import { AppError } from "../errors/AppError";
 import { z } from "zod";
 
 const listCustomerSchema = z.object({
@@ -14,17 +15,18 @@ class ListCustomerController {
       const customerService = new ListCustomerService();
       const customer = await customerService.execute({ id });
 
-      if (!customer) {
-        return reply.status(404).send({ error: "Cliente não encontrado" });
-      }
-
-      reply.send(customer);
-    } catch (error) {
+      return reply.status(200).send(customer);
+    } catch (error: any) {
       if (error instanceof z.ZodError) {
         return reply
           .status(400)
           .send({ error: error.errors.map((e) => e.message).join(", ") });
       }
+
+      if (error instanceof AppError) {
+        return reply.status(error.statusCode).send({ error: error.message });
+      }
+
       return reply.status(500).send({
         error: "Erro interno do servidor",
       });

@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { UpdateCustomerService } from "../services/UpdateCustomerService";
+import { AppError } from "../errors/AppError";
 import { z } from "zod";
 
 const updateCustomerParamsSchema = z.object({
@@ -17,17 +18,15 @@ class UpdateCustomerController {
       const { id } = updateCustomerParamsSchema.parse(request.params);
       const { name, email } = updateCustomerBodySchema.parse(request.body);
 
-      if (!id || !name || !email) {
-        return reply
-          .status(400)
-          .send({ error: "Todos os campos são obrigatórios" });
-      }
-
       const customerService = new UpdateCustomerService();
 
-      const customer = await customerService.execute({ id, name, email });
+      const customer = await customerService.execute({
+        id,
+        name,
+        email: email.toLowerCase(),
+      });
 
-      reply.status(200).send({
+      return reply.status(200).send({
         message: "Cliente atualizado com sucesso!",
         customer,
       });
@@ -37,9 +36,11 @@ class UpdateCustomerController {
           .status(400)
           .send({ error: error.errors.map((e) => e.message).join(", ") });
       }
-      if (error.message === "Cliente não encontrado") {
-        return reply.status(400).send({ error: error.message });
+
+      if (error instanceof AppError) {
+        return reply.status(error.statusCode).send({ error: error.message });
       }
+
       return reply.status(500).send({
         error: "Erro interno do servidor",
       });

@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { CreateCustomerService } from "../services/CreateCustomerService";
+import { AppError } from "../errors/AppError";
 import { z } from "zod";
 
 const createCustomerSchema = z.object({
@@ -8,7 +9,7 @@ const createCustomerSchema = z.object({
 });
 
 class CreateCustomerController {
-  async handle(request: FastifyRequest, replay: FastifyReply) {
+  async handle(request: FastifyRequest, reply: FastifyReply) {
     try {
       const { name, email } = createCustomerSchema.parse(request.body);
 
@@ -18,14 +19,19 @@ class CreateCustomerController {
         email: email.toLowerCase(),
       });
 
-      replay.send(customer);
+      reply.send(customer);
     } catch (error: any) {
       if (error instanceof z.ZodError) {
-        return replay
+        return reply
           .status(400)
           .send({ error: error.errors.map((e) => e.message).join(", ") });
       }
-      return replay.status(500).send({
+
+      if (error instanceof AppError) {
+        return reply.status(error.statusCode).send({ error: error.message });
+      }
+
+      return reply.status(500).send({
         error: "Erro interno do servidor",
       });
     }
